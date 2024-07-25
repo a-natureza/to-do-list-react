@@ -6,7 +6,10 @@ const TodoForm = ({ addTodo }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (!value || !category) return;
+		if (!value || !category) {
+			alert("Por favor, preencha o texto da tarefa  escolha uma categoria.");
+			return;
+		}
 		// add to do
 		addTodo(value, category);
 		// limpar os campos
@@ -20,7 +23,7 @@ const TodoForm = ({ addTodo }) => {
 			<form onSubmit={handleSubmit}>
 				<input
 					type="text"
-					placeholder="Digite o título"
+					placeholder="Digite uma nova tarefa"
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
 				/>
