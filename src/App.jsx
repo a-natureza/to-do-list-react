@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Filter from "./components/Filter";
 import Search from "./components/Search";
@@ -20,6 +20,12 @@ function App() {
 			category: "Saúde",
 			isCompleted: false,
 		},
+		{
+			id: 4,
+			text: "Fazer programa",
+			category: "Trabalho",
+			isCompleted: false,
+		},
 	]);
 
 	const [search, setSearch] = useState("");
@@ -28,7 +34,31 @@ function App() {
 
 	const [sort, setSort] = useState("Asc");
 
+	const [editTodo, setEditTodo] = useState(null);
+
+	const [editTodoText, setEditTodoText] = useState("");
+	// Load to do no local storage
+	useEffect(() => {
+		const storedTodos = JSON.parse(localStorage.getItem("todos"));
+		if (storedTodos) {
+			setTodos(storedTodos);
+		}
+	}, []);
+
+	// Save to do no local storage
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
+
 	const addTodo = (text, category) => {
+		if (!category) {
+			alert("Por favor, selecione uma categoria");
+			return;
+		}
+		if (!text) {
+			alert("Por favor, digite uma tarefa");
+			return;
+		}
 		const newTodos = [
 			...todos,
 			{
@@ -53,10 +83,41 @@ function App() {
 		setTodos(newTodos);
 	};
 
+	const startEdit = (todo) => {
+		setEditTodo(todo);
+		setEditTodoText(todo.text);
+	};
+
+	const saveEditTodo = () => {
+		const newTodos = todos.map((todo) =>
+			todo.id === editTodo.id ? { ...todo, text: editTodoText } : todo,
+		);
+		setTodos(newTodos);
+		setEditTodo(null);
+		setEditTodoText("");
+	};
+
 	return (
 		<>
 			<div className="app">
 				<h1>Lista de Tarefas</h1>
+				<TodoForm addTodo={addTodo} />
+				{editTodo && (
+					<div className="edit-todo">
+						<h2>Editar tarefa:</h2>
+						<input
+							type="text"
+							value={editTodoText}
+							onChange={(e) => setEditTodoText(e.target.value)}
+						/>
+						<button type="button" onClick={saveEditTodo}>
+							Salvar
+						</button>
+						<button type="button" onClick={() => setEditTodo(null)}>
+							Cancelar
+						</button>
+					</div>
+				)}
 				<Search search={search} setSearch={setSearch} />
 				<Filter
 					filter={filter}
@@ -87,10 +148,10 @@ function App() {
 								todo={todo}
 								completeTodo={completeTodo}
 								removeTodo={removeTodo}
+								startEditTodo={startEdit}
 							/>
 						))}
 				</div>
-				<TodoForm addTodo={addTodo} />
 			</div>
 		</>
 	);

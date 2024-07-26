@@ -1,6 +1,6 @@
 import React from "react";
 
-const Todo = ({ todo, completeTodo, removeTodo }) => {
+const Todo = ({ todo, completeTodo, removeTodo, startEditTodo }) => {
 	return (
 		<div
 			className="todo"
@@ -17,6 +17,9 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
 					onClick={() => completeTodo(todo.id)}
 				>
 					Feito
+				</button>
+				<button type="button" onClick={() => startEditTodo(todo)}>
+					Editar
 				</button>
 				<button
 					type="button"

@@ -8,12 +8,15 @@ O site está disponível em: [Cosmic React To-Do List](https://cosmic-react-to-d
 
 ## Funcionalidades
 
-- Adicionar novas tarefas com texto e categoria.
-- Completar tarefas marcando-as como concluídas.
-- Remover tarefas da lista.
+- Adicionar uma nova tarefa com uma categoria.
+- Marcar uma tarefa como concluída.
+- Editar uma tarefa existente.
+- Remover uma tarefa.
 - Filtrar tarefas por status (Todas, Concluídas, Pendentes).
 - Ordenar tarefas em ordem alfabética (A-Z, Z-A).
-- Buscar tarefas por texto.
+- Pesquisar tarefas pelo texto.
+- Pesquisar tarefas por categoria.
+- Persistir estado das tarefas usando Local Storage.
 
 ## Tecnologias Utilizadas
 

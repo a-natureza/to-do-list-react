@@ -6,10 +6,6 @@ const TodoForm = ({ addTodo }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (!value || !category) {
-			alert("Por favor, preencha o texto da tarefa  escolha uma categoria.");
-			return;
-		}
 		// add to do
 		addTodo(value, category);
 		// limpar os campos
